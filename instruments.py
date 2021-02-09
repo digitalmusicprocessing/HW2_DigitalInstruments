@@ -278,7 +278,8 @@ def fm_wood_drum_sound(sr, note, duration, fixed_note = -14):
 
 def fm_dirty_bass_note(sr, note, duration):
     """
-    Make what Chowning calls a "wood drum sound"
+    Make a "dirty bass" note, based on 
+    https://www.attackmagazine.com/technique/tutorials/dirty-fm-bass/
     Parameters
     ----------
     sr: int
