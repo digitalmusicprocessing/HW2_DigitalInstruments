@@ -2,32 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def load_tune(filename, tune_length):
-    """
-    Load in information about notes and their
-    onset times from a text file
-    Parameters
-    ----------
-    filename: string
-        Path to file with the tune
-    tune_length: float
-        Length, in seconds, of the tune
-    
-    Returns
-    -------
-    ps: ndarray(N)
-        A list of N note numbers
-    times: ndarray(N)
-        Duration of each note, in increments
-        of sixteenth notes
-    """
-    tune = np.loadtxt(filename)
-    ps = tune[:, 0]
-    times = np.zeros(tune.shape[0])
-    times[1::] = np.cumsum(tune[0:-1, 1])
-    times = times*tune_length/np.sum(tune[:, 1])
-    return ps, times
-
 def karplus_strong_note(sr, note, duration, decay):
     """
     Parameters
@@ -319,6 +293,6 @@ def make_tune(filename, sixteenth_len, sr, note_fn):
     """
     tune = np.loadtxt(filename)
     notes = tune[:, 0]
-    durations = tune[:, 1]
+    durations = sixteenth_len*tune[:, 1]
     ## TODO: Fill this in
     return None # This is a dummy value
