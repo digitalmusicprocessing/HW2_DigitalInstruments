@@ -24,7 +24,7 @@ def karplus_strong_note(sr, note, duration, decay):
     ## TODO: Fill this in
     return y
 
-def fm_synth_note(sr, note, duration, ratio = 2, I = 2, 
+def fm_synth_note(sr, note, duration, ratio=2, I=2, 
                   envelope = lambda N, sr: np.ones(N),
                   amplitude = lambda N, sr: np.ones(N)):
     """
@@ -55,7 +55,7 @@ def fm_synth_note(sr, note, duration, ratio = 2, I = 2,
     ## TODO: Fill this in
     return y
 
-def exp_env(N, sr, lam = 3):
+def exp_env(N, sr, mu=3):
     """
     Make an exponential envelope
     Parameters
@@ -64,14 +64,14 @@ def exp_env(N, sr, lam = 3):
         Number of samples
     sr: int
         Sample rate
-    lam: float
-        Exponential decay rate: e^{-lam*t}
+    mu: float
+        Exponential decay rate: e^{-mu*t}
 
     Returns
     -------
     ndarray(N): Envelope samples
     """
-    return np.exp(-lam*np.arange(N)/sr)
+    return np.exp(-mu*np.arange(N)/sr)
 
 def drum_like_env(N, sr):
     """
@@ -143,7 +143,7 @@ def dirty_bass_env(N, sr):
     ## TODO: Fill this in
     return np.zeros(N)
 
-def fm_plucked_string_note(sr, note, duration, lam = 3):
+def fm_plucked_string_note(sr, note, duration, mu=3):
     """
     Make a plucked string of a particular length
     using FM synthesis
@@ -155,18 +155,40 @@ def fm_plucked_string_note(sr, note, duration, lam = 3):
         Note number.  0 is 440hz concert A
     duration: float
         Seconds of audio
-    lam: float
+    mu: float
         The decay rate of the note
     
     Returns
     -------
     ndarray(N): Audio samples for this note
     """
-    envelope = lambda N, sr: exp_env(N, sr, lam)
-    return fm_synth_note(sr, note, duration, \
+    envelope = lambda N, sr: exp_env(N, sr, mu)
+    return fm_synth_note(sr, note, duration,
                 ratio = 1, I = 8, envelope = envelope,
                 amplitude = envelope)
 
+def fm_electric_guitar_note(sr, note, duration, mu=3):
+    """
+    Make an electric guitar string of a particular length by
+    passing along the parameters to fm_plucked_string note
+    and then turning the samples into a square wave
+
+    Parameters
+    ----------
+    sr: int
+        Sample rate
+    note: int
+        Note number.  0 is 440hz concert A
+    duration: float
+        Seconds of audio
+    mu: float
+        The decay rate of the note
+    
+    Return
+    ------
+    ndarray(N): Audio samples for this note
+    """
+    return None # This is a dummy value
 
 def fm_brass_note(sr, note, duration):
     """
@@ -229,9 +251,30 @@ def fm_drum_sound(sr, note, duration, fixed_note = -14):
     ## TODO: Fill this in
     return None # This is a dummy value
 
-def fm_wood_drum_sound(sr, note, duration, fixed_note = -14):
+def fm_wood_drum_sound(sr, note, duration, fixed_note=-14):
     """
     Make what Chowning calls a "wood drum sound"
+    Parameters
+    ----------
+    sr: int
+        Sample rate
+    note: int
+        Note number (which is ignored)
+    duration: float
+        Seconds of audio
+    fixed_note: int
+        Note number of the fixed note for this drum
+    
+    Returns
+    -------
+    ndarray(N): Audio samples for this drum hit
+    """
+    ## TODO: Fill this in
+    return None # This is a dummy value
+
+def snare_drum_sound(sr, note, duration):
+    """
+    Make a snare drum sound by shaping noise
     Parameters
     ----------
     sr: int
